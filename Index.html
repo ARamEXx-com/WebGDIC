@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GDIC Logistics | Fast & Reliable Shipping</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-red-700 text-white p-5 flex justify-between items-center fixed w-full z-50 shadow-md">
+    <h1 class="text-3xl font-bold">GDIC Logistics</h1>
+    <div class="space-x-6 text-base">
+      <a href="#" class="hover:underline">Home</a>
+      <a href="#services" class="hover:underline">Services</a>
+      <a href="#tracking" class="hover:underline">Track Shipment</a>
+      <a onclick="showCargoProcess()" class="hover:underline cursor-pointer">Cargo Process</a>
+      <button onclick="showLoginModal()" class="hover:underline">Login</button>
+      <button onclick="showRegisterModal()" class="bg-white text-red-700 px-5 py-2 rounded-xl font-medium hover:scale-105 transition">Register</button>
+      <button onclick="promptAdminAccess()" 
+              class="bg-white text-red-700 px-5 py-2 rounded-xl font-medium hover:scale-105 transition">
+        Admin
+      </button>
+      <a href="#contact" class="hover:underline">Contact</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-28 pb-36 text-center bg-gradient-to-r from-red-600 to-red-700 text-white">
+    <div class="max-w-4xl mx-auto px-6">
+      <h2 class="text-5xl font-bold mb-6">Fast & Reliable Logistics</h2>
+      <p class="text-xl mb-10">Ship anywhere in the world with GDIC</p>
+      <a href="#tracking" class="inline-block bg-white text-red-700 px-10 py-5 rounded-2xl font-bold text-lg hover:scale-105 transition">
+        Track Your Shipment
+      </a>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="py-20 px-6 bg-white">
+    <div class="max-w-6xl mx-auto">
+      <h3 class="text-4xl font-bold text-center mb-12">Our Services</h3>
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
+        <div onclick="showFlightModal()" class="bg-white p-8 rounded-3xl shadow-lg hover:-translate-y-2 transition text-center cursor-pointer">
+          ✈️<br><strong class="text-2xl block mt-4">Air Freight</strong><br>
+          <p class="text-gray-600 mt-3">Fast international delivery</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:-translate-y-2 transition text-center">
+          🚢<br><strong class="text-2xl block mt-4">Sea Freight</strong><br>
+          <p class="text-gray-600 mt-3">Affordable large cargo</p>
+        </div>
+        <div class="bg-white p-8 rounded-3xl shadow-lg hover:-translate-y-2 transition text-center">
+          🚚<br><strong class="text-2xl block mt-4">Door Delivery</strong><br>
+          <p class="text-gray-600 mt-3">Delivered to your doorstep</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tracking -->
+  <section id="tracking" class="bg-gray-100 py-20 px-6">
+    <div class="max-w-xl mx-auto text-center">
+      <h3 class="text-4xl font-bold mb-8">Track Your Shipment</h3>
+      <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input id="trackingInput" type="text" placeholder="Enter Tracking ID" 
+               class="flex-1 p-4 border rounded-2xl focus:outline-none focus:ring-2 focus:ring-red-600 text-lg">
+        <button onclick="trackPackage()" 
+                class="bg-red-700 text-white px-10 py-4 rounded-2xl font-bold hover:bg-red-800 transition">
+          Track Now
+        </button>
+      </div>
+      <div id="trackingResult" class="hidden mt-6 text-green-600 font-medium"></div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 px-6 text-center bg-white">
+    <h3 class="text-4xl font-bold mb-6">Contact Us</h3>
+    <p class="mb-2">support@gdiclogistics.com</p>
+    <p class="mb-2">+234 000 000 0000</p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-red-700 text-white py-8 text-center">
+    <p>© <span id="year"></span> GDIC Logistics. All rights reserved.</p>
+  </footer>
+
+  <!-- Register Modal -->
+  <div id="registerModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4">
+      <h3 class="text-3xl font-bold mb-6 text-center">Create Account</h3>
+      <form id="registerForm" onsubmit="handleRegister(event)">
+        <input type="text" id="regName" placeholder="Full Name" required class="w-full p-4 border rounded-2xl mb-4">
+        <input type="email" id="regEmail" placeholder="Email Address" required class="w-full p-4 border rounded-2xl mb-4">
+        <input type="tel" id="regPhone" placeholder="Phone Number" required class="w-full p-4 border rounded-2xl mb-4">
+        <input type="password" id="regPassword" placeholder="Password" required class="w-full p-4 border rounded-2xl mb-6">
+        <button type="submit" class="w-full bg-red-700 text-white py-4 rounded-2xl font-bold">Register</button>
+      </form>
+      <button onclick="hideRegisterModal()" class="mt-4 w-full text-gray-500">Close</button>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+    <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4">
+      <h3 class="text-3xl font-bold mb-6 text-center">Login</h3>
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <input type="email" id="loginEmail" placeholder="Email Address" required class="w-full p-4 border rounded-2xl mb-4">
+        <input type="password" id="loginPassword" placeholder="Password" required class="w-full p-4 border rounded-2xl mb-6">
+        <button type="submit" class="w-full bg-red-700 text-white py-4 rounded-2xl font-bold">Login</button>
+      </form>
+      <button onclick="hideLoginModal()" class="mt-4 w-full text-gray-500">Close</button>
+    </div>
+  </div>
+
+  <!-- Admin Access Modal (Secret Code) -->
+  <div id="adminAccessModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+    <div class="bg-white rounded-3xl p-8 max-w-sm w-full mx-4">
+      <h3 class="text-2xl font-bold mb-6 text-center">Admin Access</h3>
+      <p class="text-center mb-4 text-gray-600">Enter Secret Code</p>
+      <input type="password" id="adminCode" placeholder="Enter code" 
+             class="w-full p-4 border rounded-2xl mb-6 text-center">
+      <button onclick="checkAdminCode()" 
+              class="w-full bg-red-700 text-white py-4 rounded-2xl font-bold mb-3">Access Registrations</button>
+      <button onclick="hideAdminAccessModal()" 
+              class="w-full text-gray-500">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Registrations List Modal -->
+  <div id="registrationsModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+    <div class="bg-white rounded-3xl p-8 max-w-2xl w-full mx-4 max-h-[90vh] overflow-auto">
+      <h3 class="text-3xl font-bold mb-6 text-center">Registered Users (Admin Only)</h3>
+      <div id="registrationsList" class="space-y-4 text-sm"></div>
+      <button onclick="hideRegistrationsModal()" class="mt-8 w-full bg-red-700 text-white py-4 rounded-2xl font-bold">Close</button>
+    </div>
+  </div>
+
+  <!-- Cargo Process Modal -->
+  <div id="cargoModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+    <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-auto">
+      <h3 class="text-3xl font-bold mb-6 text-center">Cargo Transportation Process</h3>
+      <ol class="space-y-6 text-left list-decimal pl-6">
+        <li class="font-medium">Submit your shipment details and documents</li>
+        <li class="font-medium">We review and provide a quote</li>
+        <li class="font-medium">Make payment and prepare your cargo</li>
+        <li class="font-medium">Pickup or drop-off at our facility</li>
+        <li class="font-medium">Processing and necessary clearances</li>
+        <li class="font-medium">Transportation begins</li>
+        <li class="font-medium">Real-time tracking available</li>
+        <li class="font-medium">Delivery to final destination</li>
+      </ol>
+      <button onclick="hideCargoModal()" class="mt-8 w-full bg-red-700 text-white py-4 rounded-2xl font-bold">Close</button>
+    </div>
+  </div>
+
+  <!-- Flight Modal -->
+  <div id="flightModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[100]">
+    <div class="bg-white rounded-3xl p-8 max-w-lg w-full mx-4 max-h-[90vh] overflow-auto">
+      <h3 class="text-3xl font-bold mb-6 text-center">Air Freight</h3>
+      <div class="space-y-6 text-left">
+        <p class="font-medium">Fast and secure international air cargo service.</p>
+        <ul class="list-disc pl-6 space-y-3">
+          <li>Door-to-airport and airport-to-door options</li>
+          <li>Express delivery for time-sensitive shipments</li>
+          <li>Real-time tracking throughout the journey</li>
+          <li>Professional handling of all cargo types</li>
+          <li>Competitive rates for both small and large shipments</li>
+        </ul>
+      </div>
+      <button onclick="hideFlightModal()" class="mt-8 w-full bg-red-700 text-white py-4 rounded-2xl font-bold">Close</button>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', e => {
+        if (link.getAttribute('href') !== '#') {
+          e.preventDefault();
+          document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+
+    function trackPackage() {
+      const input = document.getElementById("trackingInput").value.trim();
+      const result = document.getElementById("trackingResult");
+
+      if (!input) {
+        alert("Please enter a tracking ID");
+        return;
+      }
+
+      result.classList.remove("hidden");
+      result.innerHTML = `✅ Redirecting to tracking page for <strong>${input}</strong>...`;
+
+      setTimeout(() => {
+        window.location.href = `https://aramexx-com.github.io/Trackingg/?trackingID=${encodeURIComponent(input)}`;
+      }, 800);
+    }
+
+    // Modal Functions
+    function showRegisterModal() { document.getElementById("registerModal").classList.remove("hidden"); }
+    function hideRegisterModal() { document.getElementById("registerModal").classList.add("hidden"); }
+
+    function showLoginModal() { document.getElementById("loginModal").classList.remove("hidden"); }
+    function hideLoginModal() { document.getElementById("loginModal").classList.add("hidden"); }
+
+    function showCargoProcess() { document.getElementById("cargoModal").classList.remove("hidden"); }
+    function hideCargoModal() { document.getElementById("cargoModal").classList.add("hidden"); }
+
+    function showFlightModal() { document.getElementById("flightModal").classList.remove("hidden"); }
+    function hideFlightModal() { document.getElementById("flightModal").classList.add("hidden"); }
+
+    // Admin Access with Secret Code
+    function promptAdminAccess() {
+      document.getElementById("adminAccessModal").classList.remove("hidden");
+      document.getElementById("adminCode").focus();
+    }
+
+    function hideAdminAccessModal() {
+      document.getElementById("adminAccessModal").classList.add("hidden");
+      document.getElementById("adminCode").value = "";
+    }
+
+    function checkAdminCode() {
+      const enteredCode = document.getElementById("adminCode").value.trim();
+      if (enteredCode === "Legend419") {
+        hideAdminAccessModal();
+        showRegistrations();
+      } else {
+        alert("Incorrect code. Access denied.");
+      }
+    }
+
+    // Show Registrations (Admin Only)
+    function showRegistrations() {
+      const users = JSON.parse(localStorage.getItem("gdicUsers")) || [];
+      const listDiv = document.getElementById("registrationsList");
+      listDiv.innerHTML = "";
+
+      if (users.length === 0) {
+        listDiv.innerHTML = "<p class='text-center text-gray-500 py-8'>No users have registered yet.</p>";
+      } else {
+        users.forEach((user, index) => {
+          listDiv.innerHTML += `
+            <div class="border p-5 rounded-2xl bg-gray-50">
+              <div class="font-bold text-red-700">#${index + 1} - ${user.userId}</div>
+              <div><strong>Name:</strong> ${user.name}</div>
+              <div><strong>Email:</strong> ${user.email}</div>
+              <div><strong>Phone:</strong> ${user.phone}</div>
+            </div>`;
+        });
+      }
+      document.getElementById("registrationsModal").classList.remove("hidden");
+    }
+
+    function hideRegistrationsModal() {
+      document.getElementById("registrationsModal").classList.add("hidden");
+    }
+
+    // Register - Limited to 100 users
+    function handleRegister(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("regName").value.trim();
+      const email = document.getElementById("regEmail").value.trim();
+      const phone = document.getElementById("regPhone").value.trim();
+      const password = document.getElementById("regPassword").value;
+
+      let users = JSON.parse(localStorage.getItem("gdicUsers")) || [];
+
+      if (users.length >= 100) {
+        alert("Registration limit reached. Maximum 100 users allowed.");
+        return;
+      }
+
+      if (users.some(u => u.email === email)) {
+        alert("This email is already registered.");
+        return;
+      }
+
+      const userId = `GDIC${String(users.length + 1).padStart(3, '0')}`;
+
+      users.push({ userId, name, email, phone, password });
+      localStorage.setItem("gdicUsers", JSON.stringify(users));
+
+      alert(`✅ Registration Successful!\n\nYour Unique User ID is: ${userId}\n\nPlease keep this ID safe.`);
+
+      hideRegisterModal();
+      document.getElementById("registerForm").reset();
+    }
+
+    // Login
+    function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      const users = JSON.parse(localStorage.getItem("gdicUsers")) || [];
+      const user = users.find(u => u.email === email && u.password === password);
+
+      if (user) {
+        alert(`Login Successful!\nWelcome, ${user.name}!\nYour User ID: ${user.userId}`);
+        hideLoginModal();
+        document.getElementById("loginForm").reset();
+      } else {
+        alert("Invalid email or password.");
+      }
+    }
+
+    // Enter key for tracking
+    document.getElementById("trackingInput").addEventListener("keypress", e => {
+      if (e.key === "Enter") trackPackage();
+    });
+  </script>
+</body>
+</html>
